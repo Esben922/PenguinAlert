@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Penguin Predictions</title>
+    <script>
+        async function loadPrediction() {
+            const response = await fetch('data/prediction.json');
+            const data = await response.json();
+            document.getElementById("prediction").innerHTML = `
+                <h2>Latest Prediction</h2>
+                <p><b>Timestamp:</b> ${data.timestamp}</p>
+                <p><b>Bill Length:</b> ${data.bill_length_mm} mm</p>
+                <p><b>Bill Depth:</b> ${data.bill_depth_mm} mm</p>
+                <p><b>Flipper Length:</b> ${data.flipper_length_mm} mm</p>
+                <p><b>Body Mass:</b> ${data.body_mass_g} g</p>
+                <p><b>Predicted Species:</b> ${data.predicted_species}</p>
+            `;
+        }
+        window.onload = loadPrediction;
+    </script>
+</head>
+<body>
+    <div id="prediction">Loading...</div>
+</body>
+</html>
