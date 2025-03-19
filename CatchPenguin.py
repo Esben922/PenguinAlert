@@ -2,16 +2,16 @@ import sqlite3
 import joblib
 import requests
 
-# Load trained model and label encoder
+#Load our model
 clf = joblib.load("penguin_classifier.pkl")
 label_encoder = joblib.load("label_encoder.pkl")
 
-# Fetch data (Replace this URL with the real API endpoint)
+#API endpoint where we fetch data
 url = "http://130.225.39.127:8000/new_penguin/"
 response = requests.get(url)
 data = response.json()
 
-# Extract features
+#I expect the following features
 features = [[
     data["bill_length_mm"],
     data["bill_depth_mm"],
@@ -19,11 +19,11 @@ features = [[
     data["body_mass_g"]
 ]]
 
-# Predict species
+#I use the model to predict species
 species_encoded = clf.predict(features)[0]
 species = label_encoder.inverse_transform([species_encoded])[0]
 
-# Store in SQLite database
+#I connect to our database for the predicted penguins and store the data
 conn = sqlite3.connect("PenguinAlert.sqlite")
 cursor = conn.cursor()
 cursor.execute('''
@@ -32,6 +32,3 @@ cursor.execute('''
 ''', (data["bill_length_mm"], data["bill_depth_mm"], data["flipper_length_mm"], data["body_mass_g"], species))
 conn.commit()
 conn.close()
-
-# Print result
-print(f"Predicted species: {species}")
