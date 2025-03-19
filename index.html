@@ -1,25 +1,76 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Penguin Predictions</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #74ebd5, #acb6e5);
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h2 {
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .prediction-info {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #3498db;
+        }
+
+        .loading {
+            font-style: italic;
+            color: #888;
+        }
+    </style>
     <script>
         async function loadPrediction() {
-            const response = await fetch('data/prediction.json');
-            const data = await response.json();
-            document.getElementById("prediction").innerHTML = `
-                <h2>Latest Prediction</h2>
-                <p><b>Timestamp:</b> ${data.timestamp}</p>
-                <p><b>Bill Length:</b> ${data.bill_length_mm} mm</p>
-                <p><b>Bill Depth:</b> ${data.bill_depth_mm} mm</p>
-                <p><b>Flipper Length:</b> ${data.flipper_length_mm} mm</p>
-                <p><b>Body Mass:</b> ${data.body_mass_g} g</p>
-                <p><b>Predicted Species:</b> ${data.predicted_species}</p>
-            `;
+            try {
+                const response = await fetch('data/prediction.json');
+                const data = await response.json();
+                document.getElementById("prediction").innerHTML = `
+                    <h2>Penguin Prediction</h2>
+                    <p class="prediction-info"><span class="highlight">Timestamp:</span> ${data.timestamp}</p>
+                    <p class="prediction-info"><span class="highlight">Bill Length:</span> ${data.bill_length_mm} mm</p>
+                    <p class="prediction-info"><span class="highlight">Bill Depth:</span> ${data.bill_depth_mm} mm</p>
+                    <p class="prediction-info"><span class="highlight">Flipper Length:</span> ${data.flipper_length_mm} mm</p>
+                    <p class="prediction-info"><span class="highlight">Body Mass:</span> ${data.body_mass_g} g</p>
+                    <p class="prediction-info"><span class="highlight">Predicted Species:</span> ${data.predicted_species}</p>
+                `;
+            } catch (error) {
+                document.getElementById("prediction").innerHTML = "<p class='loading'>Failed to load prediction.</p>";
+            }
         }
         window.onload = loadPrediction;
     </script>
 </head>
 <body>
-    <div id="prediction">Loading...</div>
+    <div class="container">
+        <div id="prediction" class="loading">Loading prediction...</div>
+    </div>
 </body>
 </html>
