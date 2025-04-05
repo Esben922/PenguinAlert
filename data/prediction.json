@@ -1,8 +1,8 @@
 {
-    "timestamp": "2025-04-04T06:46:05.244297",
-    "bill_length_mm": 31.967078415533656,
-    "bill_depth_mm": 19.525174734730875,
-    "flipper_length_mm": 197.33454157533185,
-    "body_mass_g": 4712.710436355916,
+    "timestamp": "2025-04-05T06:43:44.399864",
+    "bill_length_mm": 42.27533941593972,
+    "bill_depth_mm": 17.18464932652063,
+    "flipper_length_mm": 192.21286291489838,
+    "body_mass_g": 6029.452271307033,
     "predicted_species": "Adelie"
 }
